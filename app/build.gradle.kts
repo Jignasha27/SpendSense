@@ -58,6 +58,9 @@ android {
         kotlinCompilerExtensionVersion = "1.5.10"
     }
     packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
@@ -89,7 +92,7 @@ dependencies {
     ksp("androidx.room:room-compiler:$roomVersion")
     
     // SQLCipher for Room Encryption
-    implementation("net.zetetic:android-database-sqlcipher:4.5.4")
+    implementation("net.zetetic:sqlcipher-android:4.6.1")
     implementation("androidx.sqlite:sqlite-ktx:2.4.0")
 
     // Hilt
@@ -106,6 +109,13 @@ dependencies {
     
     // ML Kit Text Recognition (OCR)
     implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
+
+    // Google Sign In
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
+
+    // Coil for Image Loading
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
     // Security Crypto
     implementation("androidx.security:security-crypto:1.1.0-alpha06")

@@ -2,18 +2,12 @@ package com.spendsense.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.spendsense.data.local.dao.BudgetDao
-import com.spendsense.data.local.dao.ExpenseDao
-import com.spendsense.data.local.dao.IncomeDao
-import com.spendsense.data.local.dao.UserDao
-import com.spendsense.data.local.entity.Budget
-import com.spendsense.data.local.entity.Expense
-import com.spendsense.data.local.entity.Income
-import com.spendsense.data.local.entity.User
+import com.spendsense.data.local.dao.*
+import com.spendsense.data.local.entity.*
 
 @Database(
-    entities = [User::class, Expense::class, Income::class, Budget::class],
-    version = 1,
+    entities = [User::class, Expense::class, Income::class, Budget::class, Goal::class],
+    version = 2,
     exportSchema = false
 )
 abstract class SpendSenseDatabase : RoomDatabase() {
@@ -21,4 +15,5 @@ abstract class SpendSenseDatabase : RoomDatabase() {
     abstract val expenseDao: ExpenseDao
     abstract val incomeDao: IncomeDao
     abstract val budgetDao: BudgetDao
+    abstract val goalDao: GoalDao
 }

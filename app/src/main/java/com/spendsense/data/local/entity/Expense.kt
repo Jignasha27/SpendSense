@@ -10,5 +10,7 @@ data class Expense(
     val category: String,
     val date: Long,
     val paymentMethod: String,
-    val note: String
+    val note: String,
+    val isRecurring: Boolean = false,
+    val interval: String? = null // "Monthly", "Weekly", etc.
 )

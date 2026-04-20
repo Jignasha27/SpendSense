@@ -1,21 +1,18 @@
 package com.spendsense.data.repository
 
-import com.spendsense.data.local.dao.BudgetDao
-import com.spendsense.data.local.dao.ExpenseDao
-import com.spendsense.data.local.dao.IncomeDao
-import com.spendsense.data.local.dao.UserDao
-import com.spendsense.data.local.entity.Budget
-import com.spendsense.data.local.entity.Expense
-import com.spendsense.data.local.entity.Income
-import com.spendsense.data.local.entity.User
+import com.spendsense.data.local.dao.*
+import com.spendsense.data.local.entity.*
 import com.spendsense.domain.repository.TransactionRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject // Added import
 
-class TransactionRepositoryImpl(
+// Added @Inject constructor to allow Hilt to provide this dependency
+class TransactionRepositoryImpl @Inject constructor(
     private val userDao: UserDao,
     private val expenseDao: ExpenseDao,
     private val incomeDao: IncomeDao,
-    private val budgetDao: BudgetDao
+    private val budgetDao: BudgetDao,
+    private val goalDao: GoalDao
 ) : TransactionRepository {
 
     override fun getUser(): Flow<User?> = userDao.getUser()
@@ -24,12 +21,20 @@ class TransactionRepositoryImpl(
         userDao.insertUser(user)
     }
 
+    override suspend fun deleteUser() {
+        userDao.deleteUser()
+    }
+
     override fun getAllExpenses(): Flow<List<Expense>> = expenseDao.getAllExpenses()
 
     override fun getTotalExpenseAmount(): Flow<Double?> = expenseDao.getTotalExpenseAmount()
 
     override suspend fun insertExpense(expense: Expense) {
         expenseDao.insertExpense(expense)
+    }
+
+    override suspend fun updateExpense(expense: Expense) {
+        expenseDao.updateExpense(expense)
     }
 
     override suspend fun deleteExpense(expense: Expense) {
@@ -52,5 +57,15 @@ class TransactionRepositoryImpl(
 
     override suspend fun insertBudget(budget: Budget) {
         budgetDao.insertBudget(budget)
+    }
+
+    override fun getAllGoals(): Flow<List<Goal>> = goalDao.getAllGoals()
+
+    override suspend fun insertGoal(goal: Goal) {
+        goalDao.insertGoal(goal)
+    }
+
+    override suspend fun deleteGoal(goal: Goal) {
+        goalDao.deleteGoal(goal)
     }
 }
